@@ -38,6 +38,8 @@ public class Pencil {
                 textToWriteBuilder.append(" ");
             }
         }
+
+        durabilityPersister.setDurability(durability);
         return textToWriteBuilder.toString();
     }
 

@@ -62,4 +62,18 @@ public class PencilTest {
         verify(textRepository).appendText("nineteen c         ");
     }
 
+    @Test
+    public void write_savesNewDurability() {
+        when(durabilityPersister.getDurability()).thenReturn(10);
+        pencil.write("four");
+        verify(durabilityPersister).setDurability(6);
+    }
+
+    @Test
+    public void write_doesntDecrementDurabilityBelowZero() {
+        when(durabilityPersister.getDurability()).thenReturn(10);
+        pencil.write("more than 10 chars long");
+        verify(durabilityPersister).setDurability(0);
+    }
+
 }

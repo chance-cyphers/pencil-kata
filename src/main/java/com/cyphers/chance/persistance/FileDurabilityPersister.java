@@ -26,4 +26,8 @@ public class FileDurabilityPersister implements DurabilityPersister {
         }
     }
 
+    @Override
+    public void setDurability(int durability) {
+    }
+
 }

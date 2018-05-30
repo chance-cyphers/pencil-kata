@@ -4,4 +4,6 @@ public interface DurabilityPersister {
 
     int getDurability();
 
+    void setDurability(int durability);
+
 }
