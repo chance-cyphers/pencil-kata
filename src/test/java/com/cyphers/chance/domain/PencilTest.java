@@ -17,12 +17,15 @@ public class PencilTest {
 
     @Mock
     TextRepository textRepository;
+    @Mock
+    DurabilityPersister durabilityPersister;
 
     Pencil pencil;
 
     @Before
     public void setup() {
-        pencil = new Pencil(textRepository);
+        when(durabilityPersister.getDurability()).thenReturn(100);
+        pencil = new Pencil(textRepository, durabilityPersister);
     }
 
     @Test
@@ -50,6 +53,13 @@ public class PencilTest {
         when(textRepository.getText()).thenThrow(new FileNotFoundException());
         String newText = pencil.write("something problematic");
         assertThat(newText).isEqualTo("something went wrong when writing");
+    }
+
+    @Test
+    public void write_substitutesWhitespaceForEveryCharPastDurabilityNumber() {
+        when(durabilityPersister.getDurability()).thenReturn(10);
+        pencil.write("nineteen chars long");
+        verify(textRepository).appendText("nineteen c         ");
     }
 
 }
