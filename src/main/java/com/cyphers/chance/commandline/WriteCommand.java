@@ -17,7 +17,7 @@ public class WriteCommand implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (args.length < 2) { return; }
+        if (args.length < 2 || !args[0].equals("write")) { return; }
 
         pencil.write(args[1]);
     }
