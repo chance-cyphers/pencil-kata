@@ -9,16 +9,21 @@ import org.springframework.stereotype.Component;
 public class WriteCommand implements CommandLineRunner {
 
     private Pencil pencil;
+    private CommandLineOutput output;
 
     @Autowired
-    public WriteCommand(Pencil pencil) {
+    public WriteCommand(Pencil pencil, CommandLineOutput output) {
         this.pencil = pencil;
+        this.output = output;
     }
 
     @Override
     public void run(String... args) {
         if (args.length < 2 || !args[0].equals("write")) { return; }
 
-        pencil.write(args[1]);
+        String updatedText = pencil.write(args[1]);
+
+        output.printLine("Updated Text:");
+        output.printLine(updatedText);
     }
 }
