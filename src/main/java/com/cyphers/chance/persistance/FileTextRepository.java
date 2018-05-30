@@ -5,6 +5,7 @@ import com.cyphers.chance.util.ErrorLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Component
@@ -12,11 +13,13 @@ public class FileTextRepository implements TextRepository {
 
     private static final String FILENAME = "text.txt";
     private FileWriterWrapper fileWriter;
+    private FileReaderWrapper fileReader;
     private ErrorLogger logger;
 
     @Autowired
-    public FileTextRepository(FileWriterWrapper fileWriter, ErrorLogger logger) {
+    public FileTextRepository(FileWriterWrapper fileWriter, FileReaderWrapper fileReader, ErrorLogger logger) {
         this.fileWriter = fileWriter;
+        this.fileReader = fileReader;
         this.logger = logger;
     }
 
@@ -30,8 +33,8 @@ public class FileTextRepository implements TextRepository {
     }
 
     @Override
-    public String getText() {
-        return null;
+    public String getText() throws FileNotFoundException {
+        return fileReader.readFile(FILENAME);
     }
 
 }
