@@ -29,4 +29,9 @@ public class FileTextRepository implements TextRepository {
         }
     }
 
+    @Override
+    public String getText() {
+        return null;
+    }
+
 }

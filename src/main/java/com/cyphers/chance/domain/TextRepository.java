@@ -7,4 +7,6 @@ public interface TextRepository {
 
     void appendText(String text);
 
+    String getText();
+
 }

@@ -13,8 +13,9 @@ public class Pencil {
         this.textRepository = textRepository;
     }
 
-    public void write(String textToWrite) {
+    public String write(String textToWrite) {
         textRepository.appendText(textToWrite);
+        return textRepository.getText();
     }
 
 }
