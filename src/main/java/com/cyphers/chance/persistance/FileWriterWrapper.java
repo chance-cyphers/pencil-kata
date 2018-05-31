@@ -15,4 +15,10 @@ public class FileWriterWrapper {
         writer.close();
     }
 
+    public void overwrite(String text, String filename) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        writer.write(text);
+        writer.close();
+    }
+
 }

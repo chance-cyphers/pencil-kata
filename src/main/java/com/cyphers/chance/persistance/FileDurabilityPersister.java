@@ -4,6 +4,7 @@ import com.cyphers.chance.domain.DurabilityPersister;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @Component
 public class FileDurabilityPersister implements DurabilityPersister {
@@ -12,9 +13,11 @@ public class FileDurabilityPersister implements DurabilityPersister {
     private static final int DEFAULT_DURABILITY = 100;
 
     private FileReaderWrapper fileReader;
+    private FileWriterWrapper fileWriter;
 
-    public FileDurabilityPersister(FileReaderWrapper fileReader) {
+    public FileDurabilityPersister(FileReaderWrapper fileReader, FileWriterWrapper fileWriter) {
         this.fileReader = fileReader;
+        this.fileWriter = fileWriter;
     }
 
     @Override
@@ -27,7 +30,8 @@ public class FileDurabilityPersister implements DurabilityPersister {
     }
 
     @Override
-    public void setDurability(int durability) {
+    public void setDurability(int durability) throws IOException {
+        fileWriter.overwrite(Integer.toString(durability), FILENAME);
     }
 
 }

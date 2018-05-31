@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.*;
@@ -49,7 +50,7 @@ public class PencilTest {
     }
 
     @Test
-    public void write_returnsErrorMessage_onExceptionFromRepo() throws FileNotFoundException {
+    public void write_returnsErrorMessage_onExceptionFromRepo() throws IOException {
         when(textRepository.getText()).thenThrow(new FileNotFoundException());
         String newText = pencil.write("something problematic");
         assertThat(newText).isEqualTo("something went wrong when writing");
@@ -63,14 +64,14 @@ public class PencilTest {
     }
 
     @Test
-    public void write_savesNewDurability() {
+    public void write_savesNewDurability() throws IOException {
         when(durabilityPersister.getDurability()).thenReturn(10);
         pencil.write("four");
         verify(durabilityPersister).setDurability(6);
     }
 
     @Test
-    public void write_doesntDecrementDurabilityBelowZero() {
+    public void write_doesntDecrementDurabilityBelowZero() throws IOException {
         when(durabilityPersister.getDurability()).thenReturn(10);
         pencil.write("more than 10 chars long");
         verify(durabilityPersister).setDurability(0);
