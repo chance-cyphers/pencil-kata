@@ -23,6 +23,8 @@ public class WriteCommand implements CommandLineRunner {
 
         String updatedText = pencil.write(args[1]);
 
+        output.printLine("Remaining Durability:");
+        output.printLine(Integer.toString(pencil.getDurability()));
         output.printLine("Updated Text:");
         output.printLine(updatedText);
     }

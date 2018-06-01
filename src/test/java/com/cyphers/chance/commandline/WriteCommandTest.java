@@ -4,15 +4,14 @@ import com.cyphers.chance.domain.Pencil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WriteCommandTest {
@@ -51,6 +50,19 @@ public class WriteCommandTest {
 
         verify(output).printLine("Updated Text:");
         verify(output).printLine(updatedText);
+    }
+
+    @Test
+    public void run_printsPencilDurabilityAfterWriting() {
+        when(pencil.getDurability()).thenReturn(14);
+
+        writeCommand.run("write", "this wears down the pencil");
+
+        InOrder inOrder = inOrder(pencil);
+        inOrder.verify(pencil).write(anyString());
+        inOrder.verify(pencil).getDurability();
+        verify(output).printLine("Remaining Durability:");
+        verify(output).printLine("14");
     }
 
 }
