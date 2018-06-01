@@ -43,4 +43,8 @@ public class Pencil {
         return textToWriteBuilder.toString();
     }
 
+    public int getDurability() {
+        return durabilityPersister.getDurability();
+    }
+
 }

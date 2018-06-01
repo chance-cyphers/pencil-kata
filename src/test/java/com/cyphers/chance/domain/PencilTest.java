@@ -77,4 +77,14 @@ public class PencilTest {
         verify(durabilityPersister).setDurability(0);
     }
 
+    @Test
+    public void getDurability_returnsPersistedDurabilty() {
+        int persistedDurability = 13;
+        when(durabilityPersister.getDurability()).thenReturn(persistedDurability);
+
+        int durability = pencil.getDurability();
+
+        assertThat(durability).isEqualTo(persistedDurability);
+    }
+
 }
