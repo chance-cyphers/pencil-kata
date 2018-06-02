@@ -31,9 +31,15 @@ public class SharpenCommandTest {
     }
 
     @Test
-    public void run_sharpensPencil() {
-        sharpenCommand.run("");
+    public void run_sharpensPencil_ifFirstArgIsSharpen() {
+        sharpenCommand.run("sharpen");
         verify(pencilFromRepo).sharpen();
+    }
+
+    @Test
+    public void run_doesNotSharpenIfFirstArgIsNotSharpen() {
+        sharpenCommand.run("flarpen");
+        verify(pencilFromRepo, never()).sharpen();
     }
 
 }

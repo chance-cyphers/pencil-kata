@@ -20,9 +20,11 @@ public class SharpenCommand implements CommandLineRunner{
 
     @Override
     public void run(String... args) {
-        Pencil pencil = pencilRepository.getPencil();
+        if (!args[0].equals("sharpen")) { return; }
 
+        Pencil pencil = pencilRepository.getPencil();
         pencil.sharpen();
+
     }
 
 }
