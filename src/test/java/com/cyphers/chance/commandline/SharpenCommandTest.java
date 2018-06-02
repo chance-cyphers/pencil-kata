@@ -69,4 +69,15 @@ public class SharpenCommandTest {
         verify(output).printLine(contains("Something went wrong saving pencil state"));
     }
 
+    @Test
+    public void run_displaysNewPencilStateAfterSharpening() {
+        when(pencilFromRepo.getDurability()).thenReturn(32);
+        when(pencilFromRepo.getLength()).thenReturn(64);
+
+        sharpenCommand.run("sharpen");
+
+        verify(output).printLine("New pencil length: " + 64);
+        verify(output).printLine("New pencil durability: " + 32);
+    }
+
 }

@@ -33,6 +33,8 @@ public class SharpenCommand implements CommandLineRunner{
             output.printLine("Something went wrong saving pencil state");
         }
 
+        output.printLine("New pencil length: " + pencil.getLength());
+        output.printLine("New pencil durability: " + pencil.getDurability());
     }
 
 }
