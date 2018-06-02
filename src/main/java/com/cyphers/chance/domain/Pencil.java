@@ -5,14 +5,18 @@ import java.io.IOException;
 public class Pencil {
 
     private static final int DEFAULT_DURABILITY = 100;
+    private static final int DEFAULT_LENGTH = 10;
     private int durability;
+    private int length;
 
     public Pencil() {
         durability = DEFAULT_DURABILITY;
+        length = DEFAULT_LENGTH;
     }
 
-    public Pencil(int durability) {
+    public Pencil(int durability, int length) {
         this.durability = durability;
+        this.length = length;
     }
 
     public String write(String requestedText, TextRepository textRepository) {
@@ -40,4 +44,12 @@ public class Pencil {
 
     public int getDurability() { return durability; }
 
+    public void sharpen() {
+        durability = DEFAULT_DURABILITY;
+        length--;
+    }
+
+    public int getLength() {
+        return length;
+    }
 }

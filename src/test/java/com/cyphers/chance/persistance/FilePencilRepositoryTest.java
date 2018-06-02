@@ -34,7 +34,7 @@ public class FilePencilRepositoryTest {
 
     @Test
     public void save_writesWithObjectMapper() throws IOException {
-        Pencil pencil = new Pencil(32);
+        Pencil pencil = new Pencil(32, 5);
 
         filePencilRepository.save(pencil);
 
@@ -45,7 +45,7 @@ public class FilePencilRepositoryTest {
 
     @Test
     public void getPencil_readsFromObjectMapper() throws IOException {
-        Pencil pencilFromMapper = new Pencil(321);
+        Pencil pencilFromMapper = new Pencil(321, 5);
         when(objectMapper.readValue(any(), eq(Pencil.class))).thenReturn(pencilFromMapper);
 
         Pencil pencil = filePencilRepository.getPencil();

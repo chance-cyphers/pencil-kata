@@ -17,11 +17,13 @@ public class PencilTest {
 
     @Mock
     TextRepository textRepository;
+    int expectedDefaultDurability = 100;
+    int expectedDefaultLength = 10;
 
     @Test
     public void write_appendsTextInRepository() {
         String textToWrite = "append me";
-        new Pencil(10).write(textToWrite, textRepository);
+        new Pencil(10, 5).write(textToWrite, textRepository);
         verify(textRepository).appendText(textToWrite);
     }
 
@@ -30,7 +32,7 @@ public class PencilTest {
         String newTextFromRepository = "something something dear diary";
         when(textRepository.getText()).thenReturn(newTextFromRepository);
 
-        String newText = new Pencil(100).write("dear diary", textRepository);
+        String newText = new Pencil(100, 5).write("dear diary", textRepository);
 
         assertThat(newText).isEqualTo(newTextFromRepository);
         InOrder inOrder = inOrder(textRepository);
@@ -41,26 +43,41 @@ public class PencilTest {
     @Test
     public void write_returnsErrorMessage_onExceptionFromRepo() throws IOException {
         when(textRepository.getText()).thenThrow(new FileNotFoundException());
-        String newText = new Pencil(32).write("something problematic", textRepository);
+        String newText = new Pencil(32, 5).write("something problematic", textRepository);
         assertThat(newText).isEqualTo("something went wrong when writing");
     }
 
     @Test
     public void write_substitutesWhitespaceForEveryCharPastDurabilityNumber() {
-        new Pencil(10).write("nineteen chars long", textRepository);
+        new Pencil(10, 5).write("nineteen chars long", textRepository);
         verify(textRepository).appendText("nineteen c         ");
     }
 
     @Test
-    public void write_doesntDecrementDurabilityBelowZero() throws IOException {
-        Pencil pencil = new Pencil(10);
+    public void write_doesntDecrementDurabilityBelowZero() {
+        Pencil pencil = new Pencil(10, 5);
         pencil.write("more than 10 chars long", textRepository);
         assertThat(pencil.getDurability()).isEqualTo(0);
     }
 
     @Test
-    public void newPencil_hasDefaultDurability() {
-        assertThat(new Pencil().getDurability()).isEqualTo(100);
+    public void newPencil_hasDefaultDurabilityAndLength() {
+        assertThat(new Pencil().getDurability()).isEqualTo(expectedDefaultDurability);
+        assertThat(new Pencil().getLength()).isEqualTo(expectedDefaultLength);
+    }
+
+    @Test
+    public void sharpen_setsDurabilityBackToDefault() {
+        Pencil pencil = new Pencil(0, 5);
+        pencil.sharpen();
+        assertThat(pencil.getDurability()).isEqualTo(expectedDefaultDurability);
+    }
+
+    @Test
+    public void sharpen_reducesLengthByOne() {
+        Pencil pencil = new Pencil(0, 5);
+        pencil.sharpen();
+        assertThat(pencil.getLength()).isEqualTo(4);
     }
 
 }
