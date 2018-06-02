@@ -42,4 +42,10 @@ public class SharpenCommandTest {
         verify(pencilFromRepo, never()).sharpen();
     }
 
+    @Test
+    public void run_doesNotSharpen_ifNoArgsAreGiven() {
+        sharpenCommand.run();
+        verify(pencilFromRepo, never()).sharpen();
+    }
+
 }
