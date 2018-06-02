@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 @Component
 public class SharpenCommand implements CommandLineRunner{
 
@@ -24,6 +26,12 @@ public class SharpenCommand implements CommandLineRunner{
 
         Pencil pencil = pencilRepository.getPencil();
         pencil.sharpen();
+
+        try {
+            pencilRepository.save(pencil);
+        } catch (IOException e) {
+            output.printLine("Something went wrong saving pencil state");
+        }
 
     }
 

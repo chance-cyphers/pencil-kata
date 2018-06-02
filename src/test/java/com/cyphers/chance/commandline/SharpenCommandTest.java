@@ -5,12 +5,13 @@ import com.cyphers.chance.domain.PencilRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.io.IOException;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SharpenCommandTest {
@@ -31,12 +32,6 @@ public class SharpenCommandTest {
     }
 
     @Test
-    public void run_sharpensPencil_ifFirstArgIsSharpen() {
-        sharpenCommand.run("sharpen");
-        verify(pencilFromRepo).sharpen();
-    }
-
-    @Test
     public void run_doesNotSharpenIfFirstArgIsNotSharpen() {
         sharpenCommand.run("flarpen");
         verify(pencilFromRepo, never()).sharpen();
@@ -46,6 +41,32 @@ public class SharpenCommandTest {
     public void run_doesNotSharpen_ifNoArgsAreGiven() {
         sharpenCommand.run();
         verify(pencilFromRepo, never()).sharpen();
+    }
+
+    @Test
+    public void run_sharpensPencil_ifFirstArgIsSharpen() {
+        sharpenCommand.run("sharpen");
+        verify(pencilFromRepo).sharpen();
+    }
+
+    @Test
+    public void run_savesPencilState_afterSharpening() throws IOException {
+        sharpenCommand.run("sharpen");
+
+        InOrder inOrder = inOrder(pencilFromRepo, pencilRepository);
+        inOrder.verify(pencilFromRepo).sharpen();
+        inOrder.verify(pencilRepository).save(pencilFromRepo);
+    }
+
+    @Test
+    public void run_printsError_onExceptionFromSaving() throws IOException {
+        doThrow(IOException.class)
+                .when(pencilRepository)
+                .save(any());
+
+        sharpenCommand.run("sharpen");
+
+        verify(output).printLine(contains("Something went wrong saving pencil state"));
     }
 
 }
