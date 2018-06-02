@@ -19,8 +19,8 @@ public class HelpCommandTest {
     HelpCommand helpCommand;
 
     String expectedHelpText = "To use this application, include the following as command line arguments:\n\n"
-            + "write <text to write>\tappends text to end of paper and displays result\n"
-            + "sharpen\tresets pencil durability if it has length left\n";
+            + "\twrite <text to write>\tappends text to end of paper and displays result\n"
+            + "\tsharpen\t\t\tresets pencil durability if it has length left";
 
     @Before
     public void setup() {
