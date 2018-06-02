@@ -3,7 +3,7 @@ This is designed as a CLI -- you run the program with command line arguments whi
 
 ### To build: 
 - Clone this repository
-- CD into the project directory and, in a console, enter `./gradlew build` for mac, or `gradlew build` for pc
+- CD into the project directory and, in a console, enter `./gradlew build` for mac, or `.\gradlew build` for pc
 
 ### To run
 - CD into the `build/libs` directory
