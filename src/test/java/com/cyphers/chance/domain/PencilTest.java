@@ -80,4 +80,11 @@ public class PencilTest {
         assertThat(pencil.getLength()).isEqualTo(4);
     }
 
+    @Test
+    public void sharpen_doesNotRenewDurability_ifLengthLessThanOne() {
+        Pencil pencil = new Pencil(0, 0);
+        pencil.sharpen();
+        assertThat(pencil.getLength()).isEqualTo(0);
+    }
+
 }
