@@ -58,4 +58,9 @@ public class PencilTest {
         assertThat(pencil.getDurability()).isEqualTo(0);
     }
 
+    @Test
+    public void newPencil_hasDefaultDurability() {
+        assertThat(new Pencil().getDurability()).isEqualTo(100);
+    }
+
 }

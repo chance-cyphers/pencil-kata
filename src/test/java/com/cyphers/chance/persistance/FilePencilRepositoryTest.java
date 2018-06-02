@@ -56,4 +56,11 @@ public class FilePencilRepositoryTest {
         assertThat(pencil).isSameAs(pencilFromMapper);
     }
 
+    @Test
+    public void getPencil_returnsDefault_onExceptionFromRead() throws IOException {
+        when(objectMapper.readValue(any(), eq(Pencil.class))).thenThrow(new IOException());
+        Pencil pencil = filePencilRepository.getPencil();
+        assertThat(pencil).isNotNull();
+    }
+
 }

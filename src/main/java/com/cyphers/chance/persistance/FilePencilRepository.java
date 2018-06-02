@@ -13,7 +13,6 @@ import java.io.IOException;
 public class FilePencilRepository implements PencilRepository {
 
     private static final String FILENAME = "pencil.dat";
-    private static final int DEFAULT_DURABILITY = 100;
     private ObjectMapperWrapper objectMapper;
 
     public FilePencilRepository(ObjectMapperWrapper objectMapper) {
@@ -30,7 +29,7 @@ public class FilePencilRepository implements PencilRepository {
         try {
             return objectMapper.readValue(new File(FILENAME), Pencil.class);
         } catch (IOException e) {
-            return new Pencil(DEFAULT_DURABILITY);
+            return new Pencil();
         }
     }
 

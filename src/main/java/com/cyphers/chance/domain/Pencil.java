@@ -4,10 +4,12 @@ import java.io.IOException;
 
 public class Pencil {
 
+    private static final int DEFAULT_DURABILITY = 100;
     private int durability;
 
-    //needed for object mapper
-    public Pencil() {}
+    public Pencil() {
+        durability = DEFAULT_DURABILITY;
+    }
 
     public Pencil(int durability) {
         this.durability = durability;
