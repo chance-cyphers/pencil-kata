@@ -1,7 +1,7 @@
 package com.cyphers.chance.commandline;
 
 import com.cyphers.chance.domain.Pencil;
-import com.cyphers.chance.domain.PencilRepository;
+import com.cyphers.chance.persistance.PencilRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

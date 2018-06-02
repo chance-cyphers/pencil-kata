@@ -1,12 +1,9 @@
 package com.cyphers.chance.persistance;
 
 import com.cyphers.chance.domain.Pencil;
-import com.cyphers.chance.domain.PencilRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Component

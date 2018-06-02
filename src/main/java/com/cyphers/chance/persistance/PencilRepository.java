@@ -1,4 +1,6 @@
-package com.cyphers.chance.domain;
+package com.cyphers.chance.persistance;
+
+import com.cyphers.chance.domain.Pencil;
 
 import java.io.IOException;
 

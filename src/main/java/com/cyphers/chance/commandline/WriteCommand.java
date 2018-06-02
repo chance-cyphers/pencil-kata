@@ -1,7 +1,7 @@
 package com.cyphers.chance.commandline;
 
 import com.cyphers.chance.domain.Pencil;
-import com.cyphers.chance.domain.PencilRepository;
+import com.cyphers.chance.persistance.PencilRepository;
 import com.cyphers.chance.domain.TextRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
