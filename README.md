@@ -1,6 +1,8 @@
 # Pencil Durability Kata
 This is designed as a CLI -- you run the program with command line arguments which give commands like "write" and "sharpen". State is currently just saved off to flat files in whatever directory the app is run.
 
+Pencil durabiltiy defaults to 100. Length defaults to 10. If you need, you can edit either of these in `pencil.dat`, which should be created after running a command. 
+
 ### To build: 
 - Clone this repository
 - CD into the project directory and, in a console, enter `./gradlew build` for mac, or `.\gradlew build` for pc
