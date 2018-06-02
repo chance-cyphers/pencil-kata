@@ -1,6 +1,5 @@
 package com.cyphers.chance.domain;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -18,21 +17,11 @@ public class PencilTest {
 
     @Mock
     TextRepository textRepository;
-    @Mock
-    DurabilityPersister durabilityPersister;
-
-    Pencil pencil;
-
-    @Before
-    public void setup() {
-        when(durabilityPersister.getDurability()).thenReturn(100);
-        pencil = new Pencil(textRepository, durabilityPersister);
-    }
 
     @Test
     public void write_appendsTextInRepository() {
         String textToWrite = "append me";
-        pencil.write(textToWrite);
+        new Pencil(10).write(textToWrite, textRepository);
         verify(textRepository).appendText(textToWrite);
     }
 
@@ -41,7 +30,7 @@ public class PencilTest {
         String newTextFromRepository = "something something dear diary";
         when(textRepository.getText()).thenReturn(newTextFromRepository);
 
-        String newText = pencil.write("dear diary");
+        String newText = new Pencil(100).write("dear diary", textRepository);
 
         assertThat(newText).isEqualTo(newTextFromRepository);
         InOrder inOrder = inOrder(textRepository);
@@ -52,39 +41,21 @@ public class PencilTest {
     @Test
     public void write_returnsErrorMessage_onExceptionFromRepo() throws IOException {
         when(textRepository.getText()).thenThrow(new FileNotFoundException());
-        String newText = pencil.write("something problematic");
+        String newText = new Pencil(32).write("something problematic", textRepository);
         assertThat(newText).isEqualTo("something went wrong when writing");
     }
 
     @Test
     public void write_substitutesWhitespaceForEveryCharPastDurabilityNumber() {
-        when(durabilityPersister.getDurability()).thenReturn(10);
-        pencil.write("nineteen chars long");
+        new Pencil(10).write("nineteen chars long", textRepository);
         verify(textRepository).appendText("nineteen c         ");
     }
 
     @Test
-    public void write_savesNewDurability() throws IOException {
-        when(durabilityPersister.getDurability()).thenReturn(10);
-        pencil.write("four");
-        verify(durabilityPersister).setDurability(6);
-    }
-
-    @Test
     public void write_doesntDecrementDurabilityBelowZero() throws IOException {
-        when(durabilityPersister.getDurability()).thenReturn(10);
-        pencil.write("more than 10 chars long");
-        verify(durabilityPersister).setDurability(0);
-    }
-
-    @Test
-    public void getDurability_returnsPersistedDurabilty() {
-        int persistedDurability = 13;
-        when(durabilityPersister.getDurability()).thenReturn(persistedDurability);
-
-        int durability = pencil.getDurability();
-
-        assertThat(durability).isEqualTo(persistedDurability);
+        Pencil pencil = new Pencil(10);
+        pencil.write("more than 10 chars long", textRepository);
+        assertThat(pencil.getDurability()).isEqualTo(0);
     }
 
 }

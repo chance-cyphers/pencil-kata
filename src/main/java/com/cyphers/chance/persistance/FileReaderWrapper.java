@@ -20,9 +20,4 @@ public class FileReaderWrapper {
         return stringBuilder.toString();
     }
 
-    public int nextInt(String filename) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(filename));
-        return scanner.nextInt();
-    }
-
 }

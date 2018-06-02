@@ -1,34 +1,28 @@
 package com.cyphers.chance.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 
-@Component
 public class Pencil {
 
-    private TextRepository textRepository;
-    private DurabilityPersister durabilityPersister;
+    private int durability;
 
-    @Autowired
-    public Pencil(TextRepository textRepository, DurabilityPersister durabilityPersister) {
-        this.textRepository = textRepository;
-        this.durabilityPersister = durabilityPersister;
+    //needed for object mapper
+    public Pencil() {}
+
+    public Pencil(int durability) {
+        this.durability = durability;
     }
 
-    public String write(String requestedText) {
-        int durability = durabilityPersister.getDurability();
-
+    public String write(String requestedText, TextRepository textRepository) {
         try {
-            textRepository.appendText(buildTextToAppend(requestedText, durability));
+            textRepository.appendText(buildTextToAppend(requestedText));
             return textRepository.getText();
         } catch (IOException e) {
             return "something went wrong when writing";
         }
     }
 
-    private String buildTextToAppend(String requestedText, int durability) throws IOException {
+    private String buildTextToAppend(String requestedText) {
         StringBuilder textToWriteBuilder = new StringBuilder();
         for (int i = 0; i < requestedText.length(); i++) {
             if (durability > 0) {
@@ -39,12 +33,9 @@ public class Pencil {
             }
         }
 
-        durabilityPersister.setDurability(durability);
         return textToWriteBuilder.toString();
     }
 
-    public int getDurability() {
-        return durabilityPersister.getDurability();
-    }
+    public int getDurability() { return durability; }
 
 }
